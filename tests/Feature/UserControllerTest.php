@@ -63,7 +63,7 @@ class UserControllerTest extends TestCase
     /** @test */
     public function test_all_user(): void
     {
-        $response = $this->get('/api/user/test/3/6/45');
+        $response = $this->get('/api/user');
 
         $response->assertStatus(Response::HTTP_OK);
     }
