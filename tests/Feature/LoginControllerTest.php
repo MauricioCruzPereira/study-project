@@ -9,6 +9,8 @@ use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {
+    use RefreshDatabase;
+    
     /** @test */
     public function test_login_user(): void
     {
