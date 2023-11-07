@@ -63,7 +63,7 @@ class LoginControllerTest extends TestCase
         // Faz o login
         return  $this->json('POST', '/api/login', [
             'email' => $user->email,
-            'password' => 'password',
+            'password' => bcrypt('password'),
             'device_name' => $user->device_name
         ]);
     }
