@@ -19,17 +19,17 @@ class BaseService{
     return $this->model::create($this->validate());
   }
   
-  public function show($id): Model{
+  public function show(int $id): Model{
     return $this->model::findOrFail($id);
   }
 
-  public function update($id): Model{
+  public function update(int $id): Model{
     $model = $this->show($id);
     $model->update($this->validate());
     return $model->refresh();
   }
 
-  public function destroy($id): bool{
+  public function destroy(int $id): bool{
     $model = $this->show($id);
     return $model->delete();
   }
