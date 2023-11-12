@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
@@ -17,7 +17,7 @@ class LoginControllerTest extends TestCase
         // Faz o login
         $response = $this->reuseLogin();
 
-        $response->assertStatus(200)
+        $response->assertStatus(Response::HTTP_OK)
         ->assertJsonStructure([
             "user",
             "token",
@@ -32,7 +32,7 @@ class LoginControllerTest extends TestCase
             'Authorization' => 'Bearer ' . $user['token'],
         ])->json('POST', 'api/logout');
 
-        $response->assertStatus(200)
+        $response->assertStatus(Response::HTTP_OK)
         ->assertExactJson(['message' => 'sucesso']);
     }
 
@@ -44,7 +44,7 @@ class LoginControllerTest extends TestCase
             'Authorization' => 'Bearer ' . $user['token'],
         ])->json('GET', 'api/me');
 
-        $response->assertStatus(200)
+        $response->assertStatus(Response::HTTP_OK)
         ->assertJsonStructure([
             "user"
         ]);

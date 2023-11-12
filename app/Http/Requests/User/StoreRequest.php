@@ -27,4 +27,21 @@ class StoreRequest extends FormRequest
             "password" => "required|string|max:255"
         ];
     }
+     /**
+     * Custom messages for validation errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'name.required'     => 'O campo nome é obrigatório.',
+            'name.max'          => 'O campo nome não pode ter mais de 255 caracteres.',
+            'email.required'    => 'O campo email é obrigatório.',
+            'email.unique'      => 'Este email já está em uso.',
+            'email.max'         => 'O campo email não pode ter mais de 255 caracteres.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.max'      => 'O campo senha não pode ter mais de 255 caracteres.',
+        ];
+    }
 }
