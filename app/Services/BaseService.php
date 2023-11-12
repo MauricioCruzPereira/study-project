@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Exceptions\ExceptionRequest;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -56,8 +58,12 @@ class BaseService{
     
     //Incializa a classe de form validator
     $requestClass = is_object($requestClass) ? $requestClass : new $requestClass();
-
-    return Validator::validate(request()->all(),$requestClass->rules($currentId),$requestClass->messages());
+    $validate = Validator::make(request()->all(),$requestClass->rules($currentId),$requestClass->messages());
+    if($validate->fails()){
+      throw new ExceptionRequest($validate->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+    //dd($teste->errors());
+    return $validate->validate();
   }
 
   private function defineClassByRequest() : string{
