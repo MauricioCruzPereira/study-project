@@ -3,13 +3,13 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class LoginErrorControllerTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
     
     /** @test */
     public function test_login_error_email_user(): void
