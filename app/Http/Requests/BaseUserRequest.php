@@ -1,16 +1,23 @@
 <?php
 
-namespace App\Http\Requests\Login;
+namespace App\Http\Requests;
 
+use App\Exceptions\AuthenticationException;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class BaseUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize($model): bool
     {
+        $userId = auth()->id(); 
+        $modelRequest = $model::findOrFail(request()->route('id'));
+        if($modelRequest->id !== $userId){
+            throw new AuthenticationException('Unauthorized', 403);
+        }
+
         return true;
     }
 
@@ -22,9 +29,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email"    => "required|email|max:255",
-            "password" => "required|max:255",
-            "device_name" => "required|max:255"
+            //
         ];
     }
 }

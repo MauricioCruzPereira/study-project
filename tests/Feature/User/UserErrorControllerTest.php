@@ -35,17 +35,19 @@ class UserErrorControllerTest extends TestCase
     public function test_update_error_user()
     {
         // Crie um usuário no banco de dados
-        $user = User::factory()->count(2)->create();
+        $userCreate = User::factory()->create();
+        $user = $this->reuseLogin();
   
         // Dados a serem usados para a atualização
         $updateData = [
             'name'     => fake()->name,
-            'email'    => $user[1]->email,
+            'email'    => $userCreate->email,
             'password' => fake()->password,
         ];
-
-        // Faça uma solicitação PUT
-        $response = $this->json('PUT', "/api/user/{$user[0]->id}", $updateData);
+        
+        $response = $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $user['token'],
+        ])->json('PUT', "/api/user/{$user['user']['id']}", $updateData);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                  ->assertJsonStructure([
@@ -56,10 +58,33 @@ class UserErrorControllerTest extends TestCase
     /** @test */
     public function test_find_by_id_error_user(): void
     {
-        $response = $this->get("/api/user/99");
+        $user = $this->reuseLogin();
+        
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $user['token'],
+        ])->get("/api/user/99");
+        
         $response->assertStatus(Response::HTTP_NOT_FOUND)
         ->assertJsonStructure([
             "message"
          ]);
+    }
+
+    /**
+     * Reutilização do login
+     */
+    public function reuseLogin() : object{
+        // Crie um usuário no banco de dados
+        $user = User::factory()->create();
+
+        // Seta o device
+        $user->device_name = 'testeControllerLogin';
+
+        // Faz o login
+        return  $this->json('POST', '/api/login', [
+            'email' => $user->email,
+            'password' => 'password',
+            'device_name' => $user->device_name
+        ]);
     }
 }

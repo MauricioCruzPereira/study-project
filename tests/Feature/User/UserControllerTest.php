@@ -36,8 +36,7 @@ class UserControllerTest extends TestCase
     /** @test */
     public function test_update_user()
     {
-        // Crie um usuário no banco de dados
-        $user = User::factory()->create();
+        $user = $this->reuseLogin();
 
         // Dados a serem usados para a atualização
         $updateData = [
@@ -45,15 +44,16 @@ class UserControllerTest extends TestCase
             'email'    => fake()->email,
             'password' => fake()->password,
         ];
-
+        
         // Faça uma solicitação PUT
-        $response = $this->json('PUT', "/api/user/{$user->id}", $updateData);
-
+        $response = $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $user['token'],
+        ])->json('PUT', "/api/user/{$user['user']['id']}", $updateData);
+        
         $response->assertStatus(Response::HTTP_OK);
-
-       
+        
         $this->assertDatabaseHas('users', [
-            'id'    => $user->id,
+            'id'    => $user['user']['id'],
             'name'  => $updateData['name'],
             'email' => $updateData['email'],
         ]);
@@ -70,9 +70,12 @@ class UserControllerTest extends TestCase
     /** @test */
     public function test_find_by_id_user(): void
     {
-        $user = User::factory()->create();
-        $response = $this->get("/api/user/{$user->id}");
+        $user = $this->reuseLogin();
 
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $user['token'],
+        ])->get("/api/user/{$user['user']['id']}");
+      
         $response->assertStatus(Response::HTTP_OK)
         ->assertJsonStructure([
             "id",
@@ -81,5 +84,23 @@ class UserControllerTest extends TestCase
             "created_at",
             "updated_at"
          ]);
+    }
+
+    /**
+     * Reutilização do login
+     */
+    public function reuseLogin() : object{
+        // Crie um usuário no banco de dados
+        $user = User::factory()->create();
+
+        // Seta o device
+        $user->device_name = 'testeControllerLogin';
+
+        // Faz o login
+        return  $this->json('POST', '/api/login', [
+            'email' => $user->email,
+            'password' => 'password',
+            'device_name' => $user->device_name
+        ]);
     }
 }
