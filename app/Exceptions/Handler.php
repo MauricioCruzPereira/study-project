@@ -32,7 +32,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        //dd($e->getCode());
+        //dd($e);
+        if($e instanceof \Exception){
+            return response()->json([
+                "message" => $e->getMessage()
+            ], $e->getCode());
+        }
         if($e instanceof ModelNotFoundException){
             return response()->json([
                 "message" => "Sem resultados para a sua pesquisa"

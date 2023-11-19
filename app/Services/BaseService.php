@@ -14,14 +14,17 @@ class BaseService{
   protected ?Model $model; 
 
   public function index(): Collection{
-    return $this->model::get();
+    return $this->model::where('user_id', auth()->id())->get();
   }
 
   public function store(): Model{
-    return $this->model::create($this->validate());
+    $dataValidate = $this->validate();
+    $dataValidate['user_id'] = auth()->id() ?? 0;
+    return $this->model::create($dataValidate);
   }
   
   public function show(int $id): Model{
+    $this->validate();
     return $this->model::findOrFail($id);
   }
 
@@ -32,6 +35,7 @@ class BaseService{
   }
 
   public function destroy(int $id): bool{
+    $this->validate();
     $model = $this->show($id);
     return $model->delete();
   }
@@ -58,11 +62,11 @@ class BaseService{
     
     //Incializa a classe de form validator
     $requestClass = is_object($requestClass) ? $requestClass : new $requestClass();
+    $requestClass->authorize($this->model);
     $validate = Validator::make(request()->all(),$requestClass->rules($currentId),$requestClass->messages());
     if($validate->fails()){
       throw new ExceptionRequest($validate->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
     }
-    //dd($teste->errors());
     return $validate->validate();
   }
 
