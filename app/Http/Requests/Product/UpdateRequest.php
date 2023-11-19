@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Product;
 
 use App\Http\Requests\BaseRequest;
 
@@ -11,12 +11,13 @@ class UpdateRequest extends BaseRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules($userId = null): array
+    public function rules(): array
     {
         return [
-            "name"     => "string|max:255",
-            "email"    => "string|max:255|unique:users,email,".$userId,
-            "password" => "string|max:255"
+            "name"        => "string",
+            "description" => "string",
+            "price"       => "string",
         ];
     }
+
 }
