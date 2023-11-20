@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\User;
 
-use App\Http\Requests\BaseRequest;
+use App\Http\Requests\BaseUserRequest;
 
-class StoreRequest extends BaseRequest
+class StoreRequest extends BaseUserRequest
 {
     /**
      * Determine if the user is authorized to make this request.

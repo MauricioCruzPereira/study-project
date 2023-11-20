@@ -32,12 +32,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        //dd($e);
-        if($e instanceof \Exception){
-            return response()->json([
-                "message" => $e->getMessage()
-            ], $e->getCode());
-        }
+
         if($e instanceof ModelNotFoundException){
             return response()->json([
                 "message" => "Sem resultados para a sua pesquisa"
@@ -51,7 +46,7 @@ class Handler extends ExceptionHandler
         if($e instanceof ExceptionNotFoundEmail){
             return response()->json([
                 "message" => $e->getMessage()
-            ], $e->getCode());
+            ], Response::HTTP_NOT_FOUND);
         }
         if($e instanceof ExceptionPasswordDifferent){
             return response()->json([
@@ -62,6 +57,16 @@ class Handler extends ExceptionHandler
             return response()->json([
                 "message" => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        if($e instanceof AuthenticationException){
+            return response()->json([
+                "message" => $e->getMessage()
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        if($e instanceof \Exception){
+            return response()->json([
+                "message" => $e->getMessage()
+            ], $e->getCode());
         }
         return parent::render($request, $e);
     }

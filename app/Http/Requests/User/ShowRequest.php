@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Product;
+namespace App\Http\Requests\User;
 
-use App\Http\Requests\BaseRequest;
+use App\Http\Requests\BaseUserRequest;
 
-class ShowRequest extends BaseRequest
+class ShowRequest extends BaseUserRequest
 {
 
 }

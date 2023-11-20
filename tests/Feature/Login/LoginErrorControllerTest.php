@@ -48,8 +48,9 @@ class LoginErrorControllerTest extends TestCase
     public function test_logout_error_token_user() : void{
         
         $response = $this->withHeaders([
+            'Authorization' => 'Bearer 5|yBgnJ5Ssu02me7cVDfFEg0eT2UhVvo9UMVpsUdXe3cb6b9c7',
         ])->json('POST', 'api/logout');
-
+        
         $response->assertStatus(Response::HTTP_UNAUTHORIZED)
         ->assertExactJson(['message' => 'Unauthenticated.']);
     }
@@ -58,6 +59,7 @@ class LoginErrorControllerTest extends TestCase
     public function test_me_error_token_user() : void{
         
         $response = $this->withHeaders([
+            'Authorization' => 'Bearer 5|yBgnJ5Ssu02me7cVDfFEg0eT2UhVvo9UMVpsUdXe3cb6b9c7',
         ])->json('GET', 'api/me');
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED)

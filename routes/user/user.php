@@ -9,5 +9,9 @@ Route::controller(UserController::class)->group(function(){
     ])->except([
         "edit",
         "create"
-    ]);
+    ])->middleware(['auth:sanctum']);
+
+    // Adicione a rota create sem o middleware
+    Route::post('/', 'store');
+    Route::get('/', 'index');
 });

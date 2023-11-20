@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Exceptions\AuthenticationException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BaseRequest extends FormRequest
@@ -12,9 +13,9 @@ class BaseRequest extends FormRequest
     public function authorize($model): bool
     {
         $userId = auth()->id();
-        $modelRequest = $model::find(request()->route('id'));
-        if(!$modelRequest || $modelRequest->user_id !== $userId){
-            throw new \Exception('Unauthorized', 403);
+        $modelRequest = $model::findOrFail(request()->route('id'));
+        if($modelRequest->user_id !== $userId){
+            throw new AuthenticationException('Unauthorized', 403);
         }
 
         return true;
