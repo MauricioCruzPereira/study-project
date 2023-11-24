@@ -1,66 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Projeto API em Laravel e PHP
 
-## About Laravel
+Neste projeto, foi utilizado o Laravel Framework e o PHP para desenvolver uma API que utiliza a autenticação JWT (JSON Web Token). O projeto possui integração com banco de dados e testes unitários.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tecnologias Utilizadas
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* PHP
+* Laravel
+* Sanctum
+* Docker
+    * Mariadb
+    * Nginx
+## Instalação
 
-## Learning Laravel
+Clone o repositório do projeto em seu ambiente local:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clone o Repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/seu-projeto.git
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. **Acesse o Diretório do Projeto:**
+   ```bash
+   cd study-project
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Configuração do Docker:**
+   Certifique-se de ter o Docker instalado e em execução. Utilizamos o Docker para facilitar a configuração do ambiente.
 
-## Laravel Sponsors
+4. **Construa e Execute os Contêineres Docker:**
+   ```bash
+   docker-compose up -d
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+5. **Instale as Dependências do Composer:**
+   ```bash
+   composer install
+   ```
 
-### Premium Partners
+6. **Configure o Ambiente:**
+   Renomeie o arquivo `.env.example` para `.env` e configure as variáveis de ambiente conforme necessário.
+  ```bash 
+  cp .env.example .env
+  ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+7. **Gere a Chave de Aplicação:**
+   ```bash
+    php artisan key:generate
+   ```
 
-## Contributing
+8. **Execute as Migrações e Sementes:**
+   ```bash
+    php artisan migrate
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+9. *Caso ao rodar o comando de teste ou de migrate apresentar um erro de conectividade de bando de dados, siga os passoa a baixo:*
+  * Linux:/etc/hosts
+  * Windows: C:\Windows\System32\drivers\etc\hosts
+  - Nesse arquivo adicionar a seguinte linha: 
+  ```bash
+    127.0.0.1	db
+  ```
 
-## Code of Conduct
+## Endpoints API
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Os endpoints estão disponíveis na pasta `collections` na raiz do projeto. Consulte esses arquivos para obter informações sobre os endpoints e como interagir com a API.
 
-## Security Vulnerabilities
+## Rodando os testes
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Para rodar os testes, rode o seguinte comando
 
-## License
+**Execute os Testes:**
+```bash
+php artisan test
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Github Actions
+
+**.github/workflows**
+
+* Esse arquivo é utilizado para rodar sempre que realizar uma ação de pull request ou merge na main. Configurei o arquivo "laravel-test.yml" para rodar os tests sempre que subir algo, fazendo assim que otimize o tempo e caso mude de mais o código, venha a testar todos os endpoints para ver se o esperado manteve ou houve alteração.
