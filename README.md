@@ -18,12 +18,12 @@ Clone o repositório do projeto em seu ambiente local:
 
 1. **Clone o Repositório:**
    ```bash
-   git clone https://github.com/seu-usuario/seu-projeto.git
+    git clone https://github.com/MauricioCruzPereira/study-project.git
    ```
 
 2. **Acesse o Diretório do Projeto:**
    ```bash
-   cd study-project
+    cd study-project
    ```
 
 3. **Configuração do Docker:**
@@ -31,7 +31,7 @@ Clone o repositório do projeto em seu ambiente local:
 
 4. **Construa e Execute os Contêineres Docker:**
    ```bash
-   docker-compose up -d
+    docker-compose up -d
    ```
 
 5. **Instale as Dependências do Composer:**
@@ -42,7 +42,7 @@ Clone o repositório do projeto em seu ambiente local:
 6. **Configure o Ambiente:**
    Renomeie o arquivo `.env.example` para `.env` e configure as variáveis de ambiente conforme necessário.
   ```bash 
-  cp .env.example .env
+    cp .env.example .env
   ```
 
 7. **Gere a Chave de Aplicação:**
@@ -58,7 +58,7 @@ Clone o repositório do projeto em seu ambiente local:
 9. *Caso ao rodar o comando de teste ou de migrate apresentar um erro de conectividade de bando de dados, siga os passoa a baixo:*
   * Linux:/etc/hosts
   * Windows: C:\Windows\System32\drivers\etc\hosts
-  - Nesse arquivo adicionar a seguinte linha: 
+  * Nesse arquivo adicionar a seguinte linha: 
   ```bash
     127.0.0.1	db
   ```
